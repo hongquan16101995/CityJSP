@@ -17,6 +17,21 @@ public class City {
         this.country = country;
     }
 
+    public City(String name, double popular, double area, double GDP, String country) {
+        this.name = name;
+        this.popular = popular;
+        this.area = area;
+        this.GDP = GDP;
+        this.country = country;
+    }
+
+    public City(String name, double popular, double area, double GDP) {
+        this.name = name;
+        this.popular = popular;
+        this.area = area;
+        this.GDP = GDP;
+    }
+
     public int getId() {
         return id;
     }

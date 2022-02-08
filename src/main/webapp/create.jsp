@@ -39,7 +39,7 @@
     <label>Country :
         <select name="country">
             <c:forEach items="${country}" var="coun">
-                <option value="${coun}">${coun}</option>
+                <option value="${coun.getId()}">${coun.getName()}</option>
             </c:forEach>
         </select>
     </label>

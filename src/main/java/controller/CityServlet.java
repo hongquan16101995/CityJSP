@@ -1,6 +1,7 @@
 package controller;
 
 import model.City;
+import model.Country;
 import service.CityService;
 
 import javax.servlet.*;
@@ -15,12 +16,12 @@ public class CityServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        action(request,response);
+        action(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        action(request,response);
+        action(request, response);
     }
 
     private void action(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -69,22 +70,23 @@ public class CityServlet extends HttpServlet {
     }
 
     private void createGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ArrayList<String> countries = cityService.getCountries();
+        ArrayList<Country> countries = cityService.getCountries();
         request.setAttribute("country", countries);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("create.jsp");
         requestDispatcher.forward(request, response);
     }
 
     private void createPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
         String name = request.getParameter("name");
         double popular = Double.parseDouble(request.getParameter("popular"));
         double area = Double.parseDouble(request.getParameter("area"));
         double GDP = Double.parseDouble(request.getParameter("GDP"));
-        String country = request.getParameter("country");
-        cityService.createCity(new City(id, name, popular, area, GDP, country));
+        int country = Integer.parseInt(request.getParameter("country"));
+        City city = new City(name, popular, area, GDP);
+        boolean check = cityService.createCity(city, country);
         ArrayList<City> cities = cityService.getCities();
         request.setAttribute("listCity", cities);
+        request.setAttribute("check", check);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("view.jsp");
         requestDispatcher.forward(request, response);
     }
@@ -92,7 +94,7 @@ public class CityServlet extends HttpServlet {
     private void editGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
         City city = cityService.getCity(id);
-        ArrayList<String> countries = cityService.getCountries();
+        ArrayList<Country> countries = cityService.getCountries();
         request.setAttribute("country", countries);
         request.setAttribute("city", city);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("create.jsp");

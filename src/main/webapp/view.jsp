@@ -17,6 +17,9 @@
 <c:if test="${requestScope['listCity'].isEmpty()}">
     <h2 style="color: red">Không có sản phẩm nào</h2>
 </c:if>
+<c:if test="${requestScope['check'] == true}">
+    <h2 style="color: blue">Tạo sản phẩm thành công</h2>
+</c:if>
 <c:if test="${requestScope['listCity'].isEmpty() == false}">
     <table>
         <tr>
